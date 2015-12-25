@@ -1,6 +1,12 @@
 # Script to extract clinical annotations for each cancer
 # Fixed binning: 20 years
 
+# PREREQUISITES -------------------------
+# downloaded and normalized TPM data from TCGA for each of the cancers of interest
+# normalized TPM data contained in individual folder for each cancer under file name 'normalized_expression.RDS'
+# full clinical data downloaded from TCGA portal and stored in individual folder for each cancer
+
+# directory with folders for each cancer
 baseDir <- '~/Dropbox/EMD/'
 
 # Cancers: ER+ BRCA, ER- BRCA, COAD, GBM, KIRC, KIRP, LGG, LUAD, LUSC, PRAD
@@ -12,6 +18,11 @@ cancers <- c('BRCApos', 'BRCAneg', 'COAD', 'GBM', 'KICH', 'KIRC', 'KIRP', 'LGG',
 # sensitive to the order of cancers list
 age.ind <- as.numeric(c('14','14','3','12','3','9','3','7','9','7','3'))
 bar.ind <- as.numeric(c('22','22','1','14','1','10','1','11','12','10','1'))
+
+# maximum patient age to be included
+max.age <- 80
+# bin width for fixed label assignment
+bin.distance <- 20
 
 for (c in cancers) {
   
@@ -44,7 +55,7 @@ for (c in cancers) {
   age <- age[names(age) %in% colnames(exp)]
   
   # bin patients by age
-  bins <- seq(from=0, to=80, by=20)
+  bins <- seq(from=0, to=max.age, by=bin.distance)
   binned <- .bincode(age,bins)
   names(binned) <- names(age)
   missing <- is.na(binned)
