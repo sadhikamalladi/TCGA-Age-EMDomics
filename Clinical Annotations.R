@@ -10,7 +10,7 @@
 baseDir <- '~/Dropbox/EMD/'
 
 # Cancers: ER+ BRCA, ER- BRCA, COAD, GBM, KIRC, KIRP, LGG, LUAD, LUSC, PRAD
-cancers <- c('BRCApos', 'BRCAneg', 'COAD', 'GBM', 'KICH', 'KIRC', 'KIRP', 'LGG', 'LUAD', 'LUSC', 'PRAD')
+cancers <- c('BRCApos', 'BRCAneg', 'COAD', 'GBM', 'KIRC', 'KIRP', 'LGG', 'LUAD', 'LUSC', 'PRAD')
 
 # lists to keep track of the rows in the clinical files that are of interest
 # age.ind is the index of the row that contains the age annotation (in days or years)
@@ -53,6 +53,7 @@ for (c in cancers) {
   path.to.exp <- paste0(baseDir,c,'/normalized_expression.RDS')
   exp <- readRDS(path.to.exp)
   age <- age[names(age) %in% colnames(exp)]
+  exp <- exp[,colnames(exp) %in% names(age)]
   
   # bin patients by age
   bins <- seq(from=0, to=max.age, by=bin.distance)
