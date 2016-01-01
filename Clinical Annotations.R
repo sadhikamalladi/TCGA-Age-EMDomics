@@ -9,15 +9,15 @@
 # directory with folders for each cancer
 baseDir <- '~/Dropbox/EMD/'
 
-# Cancers: ER+ BRCA, ER- BRCA, COAD, GBM, KIRC, KIRP, LGG, LUAD, LUSC, PRAD
-cancers <- c('BRCApos', 'BRCAneg', 'COAD', 'GBM', 'KIRC', 'KIRP', 'LGG', 'LUAD', 'LUSC', 'PRAD')
+# Cancers: ER+ BRCA, ER- BRCA, COAD, GBM, KIRC, KIRP, LGG, LUAD, LUSC
+cancers <- c('BRCApos', 'BRCAneg', 'COAD', 'GBM', 'KIRC', 'KIRP', 'LGG', 'LUAD', 'LUSC')
 
 # lists to keep track of the rows in the clinical files that are of interest
 # age.ind is the index of the row that contains the age annotation (in days or years)
 # bar.ind is the index of the row that contains the barcode for the patient (unique identifier)
 # sensitive to the order of cancers list
-age.ind <- as.numeric(c('14','14','3','12','3','9','3','7','9','7','3'))
-bar.ind <- as.numeric(c('22','22','1','14','1','10','1','11','12','10','1'))
+age.ind <- as.numeric(c('14','14','3','12','9','3','7','9','7'))
+bar.ind <- as.numeric(c('22','22','1','14','10','1','11','12','10'))
 
 # maximum patient age to be included
 max.age <- 80
@@ -62,6 +62,10 @@ for (c in cancers) {
   missing <- is.na(binned)
   binned <- binned[!missing]
   age <- age[!missing]
+  
+  # combine age groups 0-20 and 20-40 because not many patients are placed in the first
+  binned <- binned - 1
+  binned[binned==0] <- 1
   
   # save annotations
   path.to.save <- paste0(baseDir,c,'/AgeClinical.RDS')

@@ -4,7 +4,7 @@ library(EMDomics) # downloaded from Bioconductor
 
 baseDir <- '~/Dropbox/EMD/'
 
-cancers <- c('BRCApos', 'BRCAneg', 'COAD', 'GBM', 'KIRC', 'KIRP', 'LGG', 'LUAD', 'LUSC', 'PRAD')
+cancers <- c('BRCApos', 'BRCAneg', 'COAD', 'GBM', 'KIRC', 'KIRP', 'LGG', 'LUAD', 'LUSC')
 
 for (c in cancers) {
   path.to.exp <- paste0(baseDir,c,'/normalized_expression.RDS')
