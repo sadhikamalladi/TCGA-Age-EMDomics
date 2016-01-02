@@ -13,7 +13,7 @@ for (c in cancers) {
   exp <- readRDS(path.to.exp)
   clin <- readRDS(path.to.clin)
   
-  emd <- calculate_emd(exp,clin,parallel=F)
+  emd <- calculate_emd(exp,clin,parallel=T)
   
   output.path <- paste0(baseDir,c,'/EMD.RDS')
   saveRDS(emd,output.path)
